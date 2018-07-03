@@ -8,13 +8,32 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Title from '../components/Title';
+import firebase from 'react-native-firebase';
 
+let newArray = [];
 export default class Temperature extends React.Component {
+    constructor() {
+        super();
+        this.tempRef = firebase.database().ref('climateControl');
+    }
+    componentDidMount() {
+        // firebase things?
+        let database = this.tempRef.once('value');
+        database.then(items => {
+            temperatureData = items._value;
+
+            newArray = temperatureData;
+
+            this.setState({
+                homeTemperature: newArray['homeTemp']
+            });
+        })
+    }
     render() {
         return(
             <View style={styles.container}>
                 <View style={styles.temperatureWrapper}>
-                    <Text style={styles.homeTemperature}>27°C</Text>
+                    <Text style={styles.homeTemperature}>{this.state.homeTemperature}</Text>
                 </View>
                 
                 <Title Title="Thermostat" />
