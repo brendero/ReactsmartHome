@@ -3,43 +3,52 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    ScrollView,
-    TouchableOpacity,
+    Slider
 } from 'react-native';
 import Title from '../components/Title';
 import firebase from 'react-native-firebase';
 
 let newArray = [];
 export default class Temperature extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.tempRef = firebase.database().ref('climateControl');
+        this.state = {
+            homeTemperature: '0',
+            thermostat: '0'
+        }
     }
     componentDidMount() {
         // firebase things?
         let database = this.tempRef.once('value');
         database.then(items => {
             temperatureData = items._value;
-
             newArray = temperatureData;
-
             this.setState({
-                homeTemperature: newArray['homeTemp']
+                homeTemperature: newArray['homeTemp'],
+                thermostat: newArray['thermostat']
             });
         })
+    }
+    _firebaseThermostatChange(temp) {
+        this.tempRef.child('/thermostat').set(temp);
     }
     render() {
         return(
             <View style={styles.container}>
                 <View style={styles.temperatureWrapper}>
-                    <Text style={styles.homeTemperature}>{this.state.homeTemperature}</Text>
+                    <Text style={styles.homeTemperature}>{this.state.homeTemperature}°C</Text>
                 </View>
                 
                 <Title Title="Thermostat" />
 
                 <View>
-
+                    <Slider
+                    //TODO: make slider dis play Firebase thermostat value + make circular
+                        minimumValue={0}
+                        maximumValue={90}
+                        value={2}
+                        onValueChange={val => this._firebaseThermostatChange(val)}/>
                 </View>
             </View>
         );

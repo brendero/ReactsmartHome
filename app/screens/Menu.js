@@ -12,6 +12,7 @@ import Temperature from './Temperature';
 import Lights from './Lights';
 import Appliances from './Appliances';
 import Security from './Security';
+import LogInScreen from './user/LogInScreen';
 //bugfix isMounted
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
@@ -54,7 +55,7 @@ const Navigation = createStackNavigator(
             screen: Security,
             navigationOptions({ navigation }) {
                 return {
-                    title: 'Lights',
+                    title: 'Video',
                 }
             }
         },
@@ -98,5 +99,6 @@ export default class Menu extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'space-between',
     },
 })

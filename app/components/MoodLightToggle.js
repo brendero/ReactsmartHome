@@ -3,18 +3,21 @@ import {
     StyleSheet,
     Text,
     View,
-    Switch
+    Switch,
+    Dimensions
 } from 'react-native';
 import firebase from 'react-native-firebase';
+import { ColorWheel } from 'react-native-color-wheel';
 
 let newArray = [];
-export default class LightToggle extends React.Component {
+export default class MoodLightToggle extends React.Component {
     constructor(props) {
         super(props);
         this.lightRef = firebase.database().ref('/Lights');
     }
     state = {
-        Light: true
+        Light: true,
+        color: "#FFFFF"
     }
 
     componentDidMount() {
@@ -22,7 +25,7 @@ export default class LightToggle extends React.Component {
         database.then(items => {
             lightData = items._value;
             newArray = lightData;
-            if(newArray[this.props.Ref] == "True") {
+            if(newArray[this.props.Ref+'/on'] == "True") {
                 this.setState({
                     Light: true
                 });
@@ -34,20 +37,33 @@ export default class LightToggle extends React.Component {
             }
         })
     }
+    toggleVisibilityColorWheel() {
+        if(this.state.Light == true) {
+
+        }   
+        if(this.state.Light == false) {
+
+        }
+    }
     _firebaseLightToggle = () => {
         let lightDate = this.state.Light;
         if(lightDate == true) {
-            this.lightRef.child(this.props.Ref).set("False");
+            this.lightRef.child(this.props.Ref+'/on').set("False");
         }
         else {
-            this.lightRef.child(this.props.Ref).set("True");
+            this.lightRef.child(this.props.Ref+'/on').set("True");
         }
         this.setState(state => ({
             Light: !state.Light
         }));
     }
+    _firebaseColorPicker = (colorValue) => {
+        this.lightRef.child(this.props.Ref+'/color').set(colorValue)
+    }
     render() {
         return(
+            <View style={{flex:1}}>
+
                 <View style={styles.titleWrapper}>
                     <Text style={{color: 'black'}}>{this.props.Title}</Text>
                     <Switch
@@ -57,8 +73,19 @@ export default class LightToggle extends React.Component {
                         tintColor= "#A9A9A9"
                         onTintColor= "#00AAD2"
                         thumbTintColor= "#FFFFFF"
-                    />
+                        />
                 </View>
+                {
+                    this.state.Light &&
+                    <ColorWheel
+                    //TODO: initialColor to current firebase color
+                    initialColor="#FFFFFF"
+                    onColorChange={(color) => {this._firebaseColorPicker(color)}}
+                    style={{width: Dimensions.get('window').width}}
+                    thumbStyle={{ height: 5, width: 5, borderRadius: 30}} />
+                }
+            </View>
+
         );
     }
 }

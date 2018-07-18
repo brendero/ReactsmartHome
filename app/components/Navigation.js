@@ -4,8 +4,10 @@ import {
     Text,
     View,
     Button,
+    TouchableOpacity
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 export default class NavigationApp extends React.Component {
     constructor(props) {
@@ -15,22 +17,51 @@ export default class NavigationApp extends React.Component {
         const { navigate } = this.props.navigation;
         return(
             <View>
-                <Button title="Temperature" style={styles.navButton} onPress={()=> navigate('Temperature') }>
-                </Button>
-                <Button title="Lights" style={styles.navButton} onPress={()=> navigate('Lights') }>
-                </Button>
-                <Button title="Appliances" style={styles.navButton} onPress={()=> navigate('Appliances') }>
-                </Button>
-                <Button title="Video" style={styles.navButton} onPress={()=> navigate('Video') }>
-                </Button>
-            </View>
+                <View style={styles.navContainer}>
+                    <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Temperature') }>
+                        <Text>
+                            <FontAwesome>{Icons.thermometerQuarter}</FontAwesome>
+                            Temperature
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Lights') }>
+                        <Text>
+                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            Lights
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.navContainer}>
+                    <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Appliances') }>
+                        <Text>
+                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            Appliances
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Video') }>
+                        <Text>
+                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            Video
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>    
         );
     }
 }
 
 const styles = StyleSheet.create({
+    navContainer: {
+        flexDirection: 'row',
+    },
     navButton: {
-        backgroundColor: 'black',
-        elevation: 0
+        backgroundColor: 'transparent',
+        borderColor: '#00AAD2',
+        borderWidth: 1,
+        elevation: 0,
+        width: "50%",
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });

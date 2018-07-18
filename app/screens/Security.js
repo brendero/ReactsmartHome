@@ -7,11 +7,13 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native';
+import AlertButton from '../components/AlertButton';
 
 export default class Security extends React.Component {
     render() {
         return(
             <View style={styles.container}>
+                <AlertButton/>
             </View>
         );
     }

@@ -7,11 +7,14 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native';
+import StereoToggle from '../components/StereoToggle';
+
 
 export default class Appliances extends React.Component {
     render() {
         return(
             <View style={styles.container}>
+                <StereoToggle Title="Stereo" Ref="Stereo"/>
             </View>
         );
     }

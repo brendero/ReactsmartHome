@@ -8,42 +8,42 @@ import {
 import firebase from 'react-native-firebase';
 
 let newArray = [];
-export default class LightToggle extends React.Component {
+export default class StereoToggle extends React.Component {
     constructor(props) {
         super(props);
-        this.lightRef = firebase.database().ref('/Lights');
+        this.ApplianceRef = firebase.database().ref('/Appliances');
     }
     state = {
-        Light: true
+        Appliance: true
     }
 
     componentDidMount() {
-        let database = this.lightRef.once('value');
+        let database = this.ApplianceRef.once('value');
         database.then(items => {
             lightData = items._value;
             newArray = lightData;
             if(newArray[this.props.Ref] == "True") {
                 this.setState({
-                    Light: true
+                    Appliance: true
                 });
             }
             else {
                 this.setState({
-                    Light: false
+                    Appliance: false
                 });
             }
         })
     }
-    _firebaseLightToggle = () => {
-        let lightDate = this.state.Light;
+    _firebaseApplianceToggle = () => {
+        let lightDate = this.state.Appliance;
         if(lightDate == true) {
-            this.lightRef.child(this.props.Ref).set("False");
+            this.ApplianceRef.child(this.props.Ref).set("False");
         }
         else {
-            this.lightRef.child(this.props.Ref).set("True");
+            this.ApplianceRef.child(this.props.Ref).set("True");
         }
         this.setState(state => ({
-            Light: !state.Light
+            Appliance: !state.Appliance
         }));
     }
     render() {
@@ -51,8 +51,8 @@ export default class LightToggle extends React.Component {
                 <View style={styles.titleWrapper}>
                     <Text style={{color: 'black'}}>{this.props.Title}</Text>
                     <Switch
-                        onValueChange={this._firebaseLightToggle}
-                        value={this.state.Light}
+                        onValueChange={this._firebaseApplianceToggle}
+                        value={this.state.Appliance}
                         style={{transform: [{scale: 1.5}]}}
                         tintColor= "#A9A9A9"
                         onTintColor= "#00AAD2"

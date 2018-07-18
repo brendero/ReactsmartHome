@@ -3,9 +3,8 @@
 
 ## getting started
 1) run `npm install`
-2) run `react-native run-android`
-
+2) run `react-native run-android`   
 
 ## Author
-This project was made by Brent De Roeck
+This project was made by Brent De Roeck <br/>
 ![Brent De Roeck](https://avatars2.githubusercontent.com/u/22441665?s=460&v=4)
