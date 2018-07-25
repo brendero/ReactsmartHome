@@ -15,7 +15,8 @@ export default class Temperature extends React.Component {
         this.tempRef = firebase.database().ref('climateControl');
         this.state = {
             homeTemperature: '0',
-            thermostat: '0'
+            thermostat: '0',
+            sliderValue:''
         }
     }
     componentDidMount() {
@@ -26,12 +27,15 @@ export default class Temperature extends React.Component {
             newArray = temperatureData;
             this.setState({
                 homeTemperature: newArray['homeTemp'],
-                thermostat: newArray['thermostat']
+                sliderValue: newArray['thermostat']
             });
         })
     }
     _firebaseThermostatChange(temp) {
         this.tempRef.child('/thermostat').set(temp);
+        this.setState({
+            sliderValue: temp
+        })
     }
     render() {
         return(
@@ -44,11 +48,18 @@ export default class Temperature extends React.Component {
 
                 <View>
                     <Slider
-                    //TODO: make slider dis play Firebase thermostat value + make circular
+                        style={styles.thermostatSlider}
                         minimumValue={0}
-                        maximumValue={90}
-                        value={2}
+                        maximumValue={100}
+                        step={1}
+                        value={parseFloat(this.state.sliderValue)}
+                        minimumTrackTintColor="#00AAD2"
+                        maximumTrackTintColor="#00AAD2"
+                        thumbTintColor="#00AAD2"
                         onValueChange={val => this._firebaseThermostatChange(val)}/>
+                        <Text style={styles.thermostatText}>
+                            {this.state.sliderValue}°
+                        </Text>
                 </View>
             </View>
         );
@@ -73,4 +84,14 @@ const styles = StyleSheet.create({
         fontFamily: 'roboto',
         color: 'black',
     },
+    thermostatSlider: {
+        
+    },
+    thermostatText: {
+        fontFamily: 'roboto',
+        fontStyle: 'italic',
+        color: '#00AAD2',
+        fontSize: 70,
+        alignSelf: 'center'
+    }
 })

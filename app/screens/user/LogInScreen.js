@@ -25,7 +25,9 @@ export default class LogInScreen extends Component {
             error: '',
         }
     }
+    //TODO: make function that checks if user is already logged in and redirects automaticaly if he is
 
+    
     loggedIn(){
         this.props.navigation.navigate('Home');
     }
@@ -41,12 +43,7 @@ export default class LogInScreen extends Component {
         })
         if (emailError == null && passwordError == null) { 
             firebase.auth().signInAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
-            .then(async (user) => {
-                this.itemsRef = firebase.database().ref('Users/' + user.user._user.uid);
-                let database = this.itemsRef.once('value');
-                database.then(items => {
-                    AsyncStorage.setItem('@MySuperStore:user', JSON.stringify(items));
-                });
+            .then(async () => {
                 this.loggedIn();
             })
             .catch((error) => {
@@ -54,7 +51,6 @@ export default class LogInScreen extends Component {
             this.setState({
                 error: error.toString()
             })
-            console.log(this.state.error)
             });
         }
     }
@@ -64,7 +60,7 @@ export default class LogInScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Image source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
+                    <Animatable.Image animation="slideInDown" direction="alternate" source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
                     <View>
                         <View style={styles.inputContainer}>
                             <FontAwesome>{Icons.chevronLeft}</FontAwesome>
@@ -124,11 +120,11 @@ export default class LogInScreen extends Component {
                         <Animatable.View animation="bounceIn">
                             <Text style={styles.warning}>{this.state.error}</Text>
                         </Animatable.View>
-                        <View>
+                        <Animatable.View animation="slideInUp" direction="alternate">
                             <TouchableOpacity onPress={() => navigate("Home")}>
                                 <Text style={styles.register}>Don't have an account? Register.</Text>
                             </TouchableOpacity>
-                        </View>
+                        </Animatable.View>
                 </View>
             </View>
         )

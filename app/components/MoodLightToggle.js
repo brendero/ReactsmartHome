@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import { ColorWheel } from 'react-native-color-wheel';
+var colorsys = require('colorsys');
 
 let newArray = [];
 export default class MoodLightToggle extends React.Component {
@@ -25,7 +26,10 @@ export default class MoodLightToggle extends React.Component {
         database.then(items => {
             lightData = items._value;
             newArray = lightData;
-            if(newArray[this.props.Ref+'/on'] == "True") {
+            this.setState({
+                firebaseColor: colorsys.hsvToHex(newArray[this.props.Ref]['color']['h'],newArray[this.props.Ref]['color']['s'],newArray[this.props.Ref]['color']['v'])
+            })
+            if(newArray[this.props.Ref]['on'] == "True") {
                 this.setState({
                     Light: true
                 });
@@ -36,14 +40,6 @@ export default class MoodLightToggle extends React.Component {
                 });
             }
         })
-    }
-    toggleVisibilityColorWheel() {
-        if(this.state.Light == true) {
-
-        }   
-        if(this.state.Light == false) {
-
-        }
     }
     _firebaseLightToggle = () => {
         let lightDate = this.state.Light;
@@ -59,6 +55,9 @@ export default class MoodLightToggle extends React.Component {
     }
     _firebaseColorPicker = (colorValue) => {
         this.lightRef.child(this.props.Ref+'/color').set(colorValue)
+        this.setState({
+            firebaseColor: colorsys.hsvToHex(colorValue['h'],colorValue['s'],colorValue['v'])
+        })
     }
     render() {
         return(
@@ -79,7 +78,7 @@ export default class MoodLightToggle extends React.Component {
                     this.state.Light &&
                     <ColorWheel
                     //TODO: initialColor to current firebase color
-                    initialColor="#FFFFFF"
+                    initialColor={this.state.firebaseColor}
                     onColorChange={(color) => {this._firebaseColorPicker(color)}}
                     style={{width: Dimensions.get('window').width}}
                     thumbStyle={{ height: 5, width: 5, borderRadius: 30}} />

@@ -51,21 +51,13 @@ export default class RegistrationScreen extends Component {
             firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password, this.state.username)
             .then(async (user) => {
                 firebase.database().ref('Users/' + user.user._user.uid).set({
+                    //TODO: check if createdAt works
+                    createdAt: day + month + year,
                     email: user.user._user.email,
                     username: this.state.username,
-                    experience: 0,
-                    trophies: {
-                        'first trophy': `${day}-${month}-${year} at ${hours}:${minutes}`,
-                    },
                   });
-                  this.itemsRef = firebase.database().ref('Users/' + user.user._user.uid);
-                  let database = this.itemsRef.once('value');
-                  database.then(items => {
-                      // console.log(items._value.experience)
-                      AsyncStorage.setItem('@MySuperStore:user', JSON.stringify(items));
-                  });
+                  //TODO: get navigate() to work 
                   this.props.navigation.navigate('LoginScreen');
-
             })
             .catch((error) => {
                 const { code, message } = error;

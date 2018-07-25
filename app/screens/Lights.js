@@ -12,7 +12,6 @@ export default class Lights extends React.Component {
             <View style={styles.container}>
                 <LightToggle Title="Bedroom Light" Ref="BedroomLight"/>
                 <LightToggle Title="Kitchen Light" Ref="KitchenLight"/>
-                <LightToggle Title="Garage Light" Ref="GarageLight"/>
                 <MoodLightToggle Title="Moodlight" Ref="Moodlight"/>
             </View>
         );

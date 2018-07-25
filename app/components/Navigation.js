@@ -3,10 +3,9 @@ import {
     StyleSheet,
     Text,
     View,
-    Button,
     TouchableOpacity
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+//TODO: get fontAwesome to work
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 export default class NavigationApp extends React.Component {
