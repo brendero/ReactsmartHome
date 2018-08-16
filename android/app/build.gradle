@@ -151,6 +151,8 @@ dependencies {
         transitive = false
     }
 
+    compile project(':WebRTCModule')
+
     // RNFirebase required dependencies
     implementation "com.google.firebase:firebase-core:15.0.2"
     implementation "com.google.android.gms:play-services-base:15.0.0"

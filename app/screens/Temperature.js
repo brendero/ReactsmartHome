@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     thermostatSlider: {
-        
+        marginTop: 20
     },
     thermostatText: {
         fontFamily: 'roboto',

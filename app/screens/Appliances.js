@@ -1,11 +1,7 @@
 import React from 'react';
 import {
     StyleSheet,
-    Text,
-    View,
-    TextInput,
-    ScrollView,
-    TouchableOpacity,
+    View
 } from 'react-native';
 import StereoToggle from '../components/StereoToggle';
 

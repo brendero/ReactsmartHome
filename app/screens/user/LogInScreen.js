@@ -5,8 +5,7 @@ import {StyleSheet,
         Dimensions, 
         TouchableOpacity,
         TextInput, 
-        Image,
-        AsyncStorage } from 'react-native';
+    } from 'react-native';
 import firebase from 'react-native-firebase';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 import * as Animatable from 'react-native-animatable';

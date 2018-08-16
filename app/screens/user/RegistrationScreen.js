@@ -5,8 +5,8 @@ import {StyleSheet,
         Image, 
         Dimensions, 
         TouchableOpacity, 
-        AsyncStorage,
-        TextInput  } from 'react-native';
+        TextInput
+      } from 'react-native';
 import firebase from 'react-native-firebase';
 import validate from '../../components/Forms/ValidateWrapper';
 import * as Animatable from 'react-native-animatable';

@@ -9,13 +9,11 @@ import Livestream from '../components/Livestream';
 export default class Security extends React.Component {
     constructor(props){
         super(props);
-        let container;
-        let RCTWebRTCDemo
     }
     render() {
         return(
             <View style={styles.container}>
-                {/* <Livestream/> */}
+                <Livestream/>
 
                 <AlertButton/>
             </View>
