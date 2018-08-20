@@ -29,10 +29,9 @@
     "react-native-color-wheel": "^0.1.5",
     "react-native-firebase": "^4.1.0",
     "react-native-fontawesome": "^5.7.0",
-    "react-native-webrtc": "^1.63.0",
+    "react-native-webrtc": "^1.67.0",
     "react-navigation": "^2.5.3",
     "react-zlib-js": "^1.0.4",
-    "rn-spotify-sdk": "^1.1.1",
     "validate.js": "^0.12.0"
   }
 }

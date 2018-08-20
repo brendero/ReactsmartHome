@@ -23,4 +23,6 @@ target 'smartHome' do
   
   pod 'Fabric', '~> 1.7.6'
   pod 'Crashlytics', '~> 3.10.1'
+  pod 'react-native-webrtc', :path => '../node_modules/react-native-webrtc'
+
 end
