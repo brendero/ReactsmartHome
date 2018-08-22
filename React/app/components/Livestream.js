@@ -51,7 +51,7 @@ export default class Livestream extends React.Component {
         .then(this._onCreateAnswerSuccess)
         pc2.onaddstream = this._gotRemoteStream;
     }
-        
+            
 
     _onCreateAnswerSuccess(desc) {
         pc2.setLocalDescription(desc).then(console.log("succes localdescription"));
@@ -59,11 +59,10 @@ export default class Livestream extends React.Component {
             sdp: desc.sdp,
             type: desc.type
         })
-
     }    
 
     _gotRemoteStream(e) {
-        console.log(e.stream.toURL());
+        console.log(e);
         this.setState({
             videoURL: e.stream.toURL()
         })

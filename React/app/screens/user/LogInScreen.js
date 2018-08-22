@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import {StyleSheet, 
         Text, 
         View,
-        Image, 
         Dimensions, 
-        TouchableOpacity, 
-        TextInput
-      } from 'react-native';
+        TouchableOpacity,
+        TextInput, 
+    } from 'react-native';
 import firebase from 'react-native-firebase';
-import validate from '../../components/Forms/ValidateWrapper';
-import * as Animatable from 'react-native-animatable';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
+import * as Animatable from 'react-native-animatable';
+import validate from '../../components/Forms/ValidateWrapper';
 
-export default class RegistrationScreen extends Component {
-    
+export default class LogInScreen extends Component {
     constructor(props) {
         super(props);
 
@@ -22,79 +20,45 @@ export default class RegistrationScreen extends Component {
             emailError: '',
             password: '',
             passwordError: '',
-            username: '',
-            usernameError: '',
+            error: '',
         }
     }
+    //TODO: make function that checks if user is already logged in and redirects automaticaly if he is
 
-    register() {
+    
+    loggedIn(){
+        this.props.navigation.navigate('Home');
+    }
+
+    onLogin() {
 
         const emailError = validate('email', this.state.email)
         const passwordError = validate('password', this.state.password)
-        const usernameError = validate('username', this.state.username)
     
         this.setState({
           emailError: emailError,
-          passwordError: passwordError,
-          usernameError: usernameError
+          passwordError: passwordError
         })
-
-    
-        if (emailError == null && passwordError== null && usernameError == null) {
-            let date = new Date();
-            day = date.getDate();
-            month = date.getMonth();
-            year = date.getFullYear();
-            hours = date.getUTCHours() + 2;
-            minutes = (date.getMinutes()<10?'0':'') + date.getMinutes();
-
-            firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password, this.state.username)
-            .then(async (user) => {
-                firebase.database().ref('Users/' + user.user._user.uid).set({
-                    //TODO: check if createdAt works
-                    createdAt: day + month + year,
-                    email: user.user._user.email,
-                    username: this.state.username,
-                  });
-                  //TODO: get navigate() to work 
-                  this.props.navigation.navigate('LoginScreen');
+        if (emailError == null && passwordError == null) { 
+            firebase.auth().signInAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
+            .then(async () => {
+                this.loggedIn();
             })
             .catch((error) => {
-                const { code, message } = error;
+            const { code, message } = error;
+            this.setState({
+                error: error.toString()
+            })
             });
         }
     }
-
 
     render(){
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Image source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
-                    <View>
-                        <View style={styles.inputContainer}>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
-                            <TextInput 
-                                style={styles.TextField}
-                                placeholder="gebruikersnaam"
-                                placeholderTextColor="#FFFFFF"
-                                selectionColor={"#FFFFFF"}
-                                underlineColorAndroid={"transparent"}
-                                onChangeText={value => {
-                                    this.setState({
-                                        username: value.trim()
-                                    })
-                                }}
-                                onBlur={() => {
-                                    this.setState({
-                                        usernameError: validate('username', this.state.username)
-                                    })
-                                }}
-                                error={this.state.usernameError}/>
-                        </View>
-                        <Text style={styles.validation}>{this.state.usernameError}</Text>
-                    </View>
+                    <Animatable.Image animation="slideInDown" direction="alternate" source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
                     <View>
                         <View style={styles.inputContainer}>
                             <FontAwesome>{Icons.chevronLeft}</FontAwesome>
@@ -131,6 +95,7 @@ export default class RegistrationScreen extends Component {
                                 onChangeText={value => {
                                     this.setState({
                                         password: value.trim(),
+                                        passwordError: validate('password', this.state.password)
                                     })
                                 }}
                                 onBlur={() => {
@@ -144,21 +109,20 @@ export default class RegistrationScreen extends Component {
                     </View>
                     <Animatable.View animation="pulse" delay={5000} durarion={10000} iterationCount="infinite">
                         <Animatable.View animation="zoomIn">
-                            <TouchableOpacity onPress={() => {this.register()}} style={styles.loginButton}>
-                                <Text style={{color:'#FFFFFF'}}>Register</Text>
+                            <TouchableOpacity onPress={() => {this.onLogin()}} style={styles.loginButton}>
+                                <Text style={{color:'#FFFFFF'}}>Login</Text>
                             </TouchableOpacity>
                         </Animatable.View>
                     </Animatable.View>
 
-
                         <Animatable.View animation="bounceIn">
                             <Text style={styles.warning}>{this.state.error}</Text>
                         </Animatable.View>
-                        <View>
-                            <TouchableOpacity onPress={() => navigate('LoginScreen')}>
-                                <Text style={styles.register}>Back to login</Text>
+                        <Animatable.View animation="slideInUp" direction="alternate">
+                            <TouchableOpacity onPress={() => navigate("Home")}>
+                                <Text style={styles.register}>Don't have an account? Register.</Text>
                             </TouchableOpacity>
-                        </View>
+                        </Animatable.View>
                 </View>
             </View>
         )
