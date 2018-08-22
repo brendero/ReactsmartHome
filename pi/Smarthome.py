@@ -23,7 +23,7 @@ default_app = firebase_admin.initialize_app(credentials.Certificate({
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ep3h4%40smarthome-7e155.iam.gserviceaccount.com" 
 }),
 {
-    'databaseURL': 'https://smarthome-7e155.firebaseio.com/'
+    'databaseURL': 'https://smarthome-7e155.firebaseio.'
 })
 
 GPIO.setmode(GPIO.BOARD)
