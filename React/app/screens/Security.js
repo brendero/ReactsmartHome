@@ -4,7 +4,7 @@ import {
     View,
 } from 'react-native';
 import AlertButton from '../components/AlertButton';
-import Livestream from '../components/Livestream';
+import RTCWebRTC from '../components/RTCLivestream';
 
 export default class Security extends React.Component {
     constructor(props){
@@ -13,8 +13,7 @@ export default class Security extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <Livestream/>
-
+                <RTCWebRTC/>
                 <AlertButton/>
             </View>
         );
@@ -24,5 +23,6 @@ export default class Security extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
 })

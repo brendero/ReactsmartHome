@@ -20,7 +20,7 @@ let newArray = [];
 let pc2;
 const servers = {"iceServers": [{"urls": "stun:stun3.l.google.com:19302"}]};
 
-
+  
 export default class Livestream extends React.Component {
     constructor(props){
         super(props);
@@ -46,7 +46,7 @@ export default class Livestream extends React.Component {
     
     _setupconnection() {
         pc2 = new RTCPeerConnection(servers);
-        pc2.setRemoteDescription(new RTCSessionDescription(this.state.msg['localRTC'])).then("succesfully set remote description")
+        pc2.setRemoteDescription(new RTCSessionDescription(this.state.msg['localRTC'])).then(console.log("succesfully set remote description"))
         pc2.createAnswer()
         .then(this._onCreateAnswerSuccess)
         pc2.onaddstream = this._gotRemoteStream;
@@ -62,7 +62,7 @@ export default class Livestream extends React.Component {
     }    
 
     _gotRemoteStream(e) {
-        console.log(e);
+        console.log(e.stream);
         this.setState({
             videoURL: e.stream.toURL()
         })

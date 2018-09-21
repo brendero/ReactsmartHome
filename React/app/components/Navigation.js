@@ -5,7 +5,6 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-//TODO: get fontAwesome to work
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 export default class NavigationApp extends React.Component {
@@ -18,28 +17,28 @@ export default class NavigationApp extends React.Component {
             <View>
                 <View style={styles.navContainer}>
                     <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Temperature') }>
-                        <Text>
-                            <FontAwesome>{Icons.thermometerQuarter}</FontAwesome>
+                        <FontAwesome style={styles.buttonIcon}>{Icons.thermometerQuarter}</FontAwesome>
+                        <Text style={styles.buttonText}>
                             Temperature
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Lights') }>
-                        <Text>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                        <FontAwesome style={styles.buttonIcon}>{Icons.lightbulbO}</FontAwesome>
+                        <Text style={styles.buttonText}>
                             Lights
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.navContainer}>
                     <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Appliances') }>
-                        <Text>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                        <FontAwesome style={styles.buttonIcon}>{Icons.wrench}</FontAwesome>
+                        <Text style={styles.buttonText}>
                             Appliances
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navButton} onPress={()=> navigate('Video') }>
-                        <Text>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                        <FontAwesome style={styles.buttonIcon}>{Icons.camera}</FontAwesome>
+                        <Text style={styles.buttonText}>
                             Video
                         </Text>
                     </TouchableOpacity>
@@ -52,6 +51,7 @@ export default class NavigationApp extends React.Component {
 const styles = StyleSheet.create({
     navContainer: {
         flexDirection: 'row',
+        backgroundColor: 'white'
     },
     navButton: {
         backgroundColor: 'transparent',
@@ -63,4 +63,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    buttonText: {
+        color: '#00AAD2',
+        fontSize: 25,
+        fontFamily: 'roboto',
+        fontWeight: "normal",
+        fontStyle: 'italic' 
+    },
+    buttonIcon: {
+        color: '#00AAD2',
+        fontSize: 35
+    }
 });

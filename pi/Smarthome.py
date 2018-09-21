@@ -4,7 +4,7 @@ import time
 import colorsys
 import math
 import Adafruit_DHT
-from sense_hat import SenseHat 
+import webbrowser
 from firebase import firebase 
 from firebase_admin import credentials 
 from firebase_admin import db
@@ -51,6 +51,8 @@ GPIO.setup(16,GPIO.OUT)
 Bpwm=GPIO.PWM(16,50)
 Bpwm.start(0)
 
+songPlaying = False
+URL = True
 
 hometempRef = db.reference('climateControl/homeTemp')
 def setHomeTempfirebase():
@@ -101,16 +103,16 @@ def Alert():
         GPIO.output(13, True)
         time.sleep(1) 
         GPIO.output(11, False)
-        GPIO.output(16, False)
+        GPIO.output(15, False)
         GPIO.output(13, False)
  
 def AirRegulation(): 
     reqTemp = db.reference('climateControl/thermostat').get()
     #TODO: getraspberrypitemp
     hum, temp = Adafruit_DHT.read_retry(11,4)
-    if reqTemp > temp:
+    if reqTemp < temp:
         #print('ifstatement') 
-        GPIO.output(12,True) 
+        GPIO.output(12,GPIO.HIGH) 
     else: 
         GPIO.output(12,False) 
 
@@ -120,6 +122,25 @@ def LightToggle(ref,gpno):
         GPIO.output(gpno,True)
     else:
         GPIO.output(gpno,False)
+
+def stereoToggle():
+    global URL;
+    global songChanged;
+    ApplianceRef = db.reference('/Appliances').get()    
+    if URL != ApplianceRef["MusicPlayer"]["URL"]:
+        songChanged = True
+        
+    if ApplianceRef["Stereo"] == "True":
+        if songPlaying == False or songChanged == True:
+            global songPlaying;
+            URL = ApplianceRef["MusicPlayer"]["URL"]        
+            webbrowser.open(URL, new=0)
+            songPlaying = True
+            songChanged = False
+            
+    else:
+        songPlaying= False
+        songChanged= False
         
 try: 
     while True:
@@ -128,7 +149,8 @@ try:
         Alert()
         LightToggle('KitchenLight',15)
         LightToggle('BedroomLight',13)
-        moodLight() 
+        moodLight()
+        stereoToggle()
          
          
  

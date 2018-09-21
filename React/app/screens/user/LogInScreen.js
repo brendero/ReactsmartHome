@@ -61,7 +61,7 @@ export default class LogInScreen extends Component {
                     <Animatable.Image animation="slideInDown" direction="alternate" source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
                     <View>
                         <View style={styles.inputContainer}>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            <FontAwesome style={styles.inputIcon}>{Icons.userCircle}</FontAwesome>
                             <TextInput 
                                 style={styles.TextField}
                                 placeholder="E-mail"
@@ -84,7 +84,7 @@ export default class LogInScreen extends Component {
                     </View>
                     <View>
                         <View style={styles.inputContainer}>
-                            <FontAwesome style={{fontFamily:"FontAwesome"}}>{Icons.chevronLeft}</FontAwesome>
+                            <FontAwesome style={styles.inputIcon}>{Icons.lock}</FontAwesome>
                             <TextInput 
                                 style={styles.TextField}
                                 placeholder="Password"
@@ -119,7 +119,7 @@ export default class LogInScreen extends Component {
                             <Text style={styles.warning}>{this.state.error}</Text>
                         </Animatable.View>
                         <Animatable.View animation="slideInUp" direction="alternate">
-                            <TouchableOpacity onPress={() => navigate("Home")}>
+                            <TouchableOpacity onPress={() => navigate("RegistrationScreen")}>
                                 <Text style={styles.register}>Don't have an account? Register.</Text>
                             </TouchableOpacity>
                         </Animatable.View>
@@ -179,5 +179,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color:  '#F06449',
         paddingBottom: 15
+    },
+    inputIcon: {
+        alignSelf:'center', 
+        marginLeft: 7, 
+        marginRight: 7, 
+        color: '#FFFFFF'
     }
 });

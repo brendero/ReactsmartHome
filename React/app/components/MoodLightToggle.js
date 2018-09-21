@@ -77,7 +77,6 @@ export default class MoodLightToggle extends React.Component {
                 {
                     this.state.Light &&
                     <ColorWheel
-                    //TODO: initialColor to current firebase color
                     initialColor={this.state.firebaseColor}
                     onColorChange={(color) => {this._firebaseColorPicker(color)}}
                     style={{width: Dimensions.get('window').width}}

@@ -5,7 +5,8 @@ import {StyleSheet,
         Image, 
         Dimensions, 
         TouchableOpacity, 
-        TextInput
+        TextInput,
+        AsyncStorage
       } from 'react-native';
 import firebase from 'react-native-firebase';
 import validate from '../../components/Forms/ValidateWrapper';
@@ -74,12 +75,10 @@ export default class RegistrationScreen extends Component {
             firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password, this.state.username)
             .then(async (user) => {
                 firebase.database().ref('Users/' + user.user._user.uid).set({
-                    //TODO: check if createdAt works
                     createdAt: day + month + year,
                     email: user.user._user.email,
                     username: this.state.username,
                   });
-                  //TODO: get navigate() to work 
                   this.props.navigation.navigate('Home');
             })
             .catch((error) => {
@@ -97,7 +96,7 @@ export default class RegistrationScreen extends Component {
                 <Animatable.Image animation="slideInDown" direction="alternate" source={require('../../assets/Logo.png')} style={{alignSelf:'center', resizeMode:'contain', width:"60%", marginBottom:50}}/>
                     <View>
                         <View style={styles.inputContainer}>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            <FontAwesome style={styles.inputIcon}>{Icons.userCircle}</FontAwesome>
                             <TextInput 
                                 style={styles.TextField}
                                 placeholder="gebruikersnaam"
@@ -120,7 +119,7 @@ export default class RegistrationScreen extends Component {
                     </View>
                     <View>
                         <View style={styles.inputContainer}>
-                            <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                            <FontAwesome style={styles.inputIcon}>{Icons.envelopeSquare}</FontAwesome>
                             <TextInput 
                                 style={styles.TextField}
                                 placeholder="E-mail"
@@ -143,7 +142,7 @@ export default class RegistrationScreen extends Component {
                     </View>
                     <View>
                         <View style={styles.inputContainer}>
-                            <FontAwesome style={{fontFamily:"FontAwesome"}}>{Icons.chevronLeft}</FontAwesome>
+                            <FontAwesome style={styles.inputIcon}>{Icons.lock}</FontAwesome>
                             <TextInput 
                                 style={styles.TextField}
                                 placeholder="Password"
@@ -238,5 +237,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color:  '#F06449',
         paddingBottom: 15
+    },
+    inputIcon: {
+        alignSelf:'center', 
+        marginLeft: 7, 
+        marginRight: 7, 
+        color: '#FFFFFF'
     }
 });

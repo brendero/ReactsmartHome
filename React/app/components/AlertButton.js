@@ -19,9 +19,7 @@ export default class AlertButton extends React.Component {
     };
 
     setAlert() {
-
         this.alertRef.child('on').set("True");
-
         this.setState({
             modalVisible: !this.state.modalVisible
         });
